@@ -7,9 +7,17 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import WorkIcon from '@mui/icons-material/Work';
 import MessageIcon from '@mui/icons-material/Message';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import * as reactRedux from 'react-redux';
+import { logout } from './features/counter/userSlice';
+import { auth } from './Firebase';
 
 function header() {
+  const dispatch = reactRedux.useDispatch()
+
+  const logoutOfApp = () => {
+      dispatch(logout())
+      auth.signOut();
+  }
   return (
     <div className='header'>
         
@@ -17,7 +25,7 @@ function header() {
         <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="" />
         <div className="header_search">
             <SearchIcon />
-            <input type="text" />
+            <input placeholder="search" type="text" />
         </div>
 
 
@@ -29,7 +37,8 @@ function header() {
         <HeaderOption Icon={WorkIcon} title="Jobs" />
         <HeaderOption Icon={MessageIcon} title="Messages"/>
         <HeaderOption Icon={NotificationsIcon} title="Notifications" />
-        <HeaderOption Avatar={AccountCircleIcon} title="avatar"/>
+        <HeaderOption avatar={true} title="me" onClick={logoutOfApp}/>
+        
       </div>
     </div>
   )
